@@ -133,6 +133,23 @@ def create_final_json_yucampus(user_data,theme_data):
         ]
     }
     }
+    
+    education_section = {
+        "education": {
+            "description": "",
+            "data": [
+                {
+                    
+                    "univeristy": edu.get("school", ""),
+                    "field": edu.get("field_of_study", ""),
+                    "points": edu.get("description", ""),
+                    "start_date": edu.get("start_date", ""), 
+                    "end_date": edu.get("end_date", ""),
+                }
+                for edu in user_data.get("education", []) 
+            ]
+        }
+    }
     skills_section = {
     "skills": [
         {
@@ -146,6 +163,7 @@ def create_final_json_yucampus(user_data,theme_data):
         "license":[
             {
                 "title": licence.get("name", ""), 
+                "description": licence.get("description", ""),
                 "organisation_logo": licence.get("upload_img", ""), 
                 "organisation_name": licence.get("issuer", ""), 
                 "issue_date": licence.get("issue_date", "") 
@@ -180,6 +198,7 @@ def create_final_json_yucampus(user_data,theme_data):
         **landing_data,
         **about_section,
         **experience_section,
+        **education_section,
         **skills_section,
         **license_section,
         **portfolio_section,
