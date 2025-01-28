@@ -116,7 +116,7 @@ class UserDataViewSet(ModelViewSet):
                 for page in pdf_reader.pages:
                     pdf_text += page.extract_text()
                 data = transform_pdf_text_to_json(pdf_text)
-                instance.user_data = user_data  
+                instance.user_data = data  
                 instance.save()
                 serializer = self.get_serializer(instance)
                 return custom_success_response(serializer.data, status=status.HTTP_200_OK)
