@@ -99,7 +99,7 @@ class UserDataViewSet(ModelViewSet):
             serializer = self.get_serializer(instance)
             return custom_success_response(serializer.data, status=status.HTTP_200_OK)
     
-        if data_type == "DIRECT":
+        elif data_type == "DIRECT":
             
             user_data = request.data['user_data']
             user_data = json.loads(user_data)
@@ -108,20 +108,28 @@ class UserDataViewSet(ModelViewSet):
 
             serializer = self.get_serializer(instance)
             return custom_success_response(serializer.data, status=status.HTTP_200_OK)
-        if data_type=="RESUME":
-            if 'resume' in request.FILES:
-                resume_file = request.FILES['resume']
+        elif data_type == "RESUME":
+            if 'resume' not in request.FILES:
+                raise ValidationError({'message': ['No resume file provided']})
+
+            resume_file = request.FILES['resume']
+            try:
                 pdf_reader = PdfReader(resume_file)
                 pdf_text = ""
                 for page in pdf_reader.pages:
                     pdf_text += page.extract_text()
                 data = transform_pdf_text_to_json(pdf_text)
-                instance.user_data = data  
-                instance.save()
-                serializer = self.get_serializer(instance)
-                return custom_success_response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                raise ValidationError({'message': ['No resume file provided']})
+            except Exception as e:
+                raise ValidationError({'message': [f'Error processing resume: {str(e)}']})
+
+            instance.user_data = data
+            instance.save()
+
+            serializer = self.get_serializer(instance)
+            return custom_success_response(serializer.data, status=status.HTTP_200_OK)
+
+        else:
+            raise ValidationError({'message': ['Invalid data_type provided']})
             
     
         partial = kwargs.pop('partial', False)
