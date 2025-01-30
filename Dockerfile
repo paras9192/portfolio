@@ -4,8 +4,8 @@ FROM python:3.8.17
 ENV PYTHONUNBUFFERED 1
 
 # Create and set working directory
-RUN mkdir /chalkmate_portfolio
-WORKDIR /chalkmate_portfolio
+RUN mkdir /chalkmate
+WORKDIR /chalkmate
 
 # Install system dependencies (optional, if needed)
 RUN apt-get update && apt-get install -y \
@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Add the requirements.txt file to the container
-ADD requirements.txt /chalkmate_portfolio/
+ADD requirements.txt /chalkmate/
 
 # Create a virtual environment and install dependencies
 RUN python -m venv venv && \
@@ -22,7 +22,7 @@ RUN python -m venv venv && \
     pip install -r requirements.txt
 
 # Add the rest of the project files
-ADD . /chalkmate_portfolio/
+ADD . /chalkmate/
 
 # Expose the default Django port
 EXPOSE 8000
