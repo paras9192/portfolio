@@ -11,10 +11,17 @@ INSTALLED_APPS += THIRD_PARTY_APPS
 MIDDLEWARE = ["corsheaders.middleware.CorsMiddleware", *MIDDLEWARE]
 
 # CORS - Allow All
-CORS_ALLOW_ALL_ORIGINS = True  # Allows all origins
-# CORS_ALLOW_CREDENTIALS = True  # Allows cookies/auth headers
-# CORS_ALLOW_HEADERS = ["*"]  # Allows all headers
-# CORS_ALLOW_METHODS = ["*"]  # Allows all HTTP methods (GET, POST, etc.)
+# CORS_ALLOW_ALL_ORIGINS = True  # Allows all origins
+# # CORS_ALLOW_CREDENTIALS = True  # Allows cookies/auth headers
+# # CORS_ALLOW_HEADERS = ["*"]  # Allows all headers
+# # CORS_ALLOW_METHODS = ["*"]  # Allows all HTTP methods (GET, POST, etc.)
+
+CORS_ALLOW_ALL_ORIGINS = True
+ACCESS_CONTROL_ALLOW_HEADERS=True
+CORS_ALLOW_HEADERS=[ '*']
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r'.*'
+]
 
 # media
 MEDIA_URL = "/media/"
