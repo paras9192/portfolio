@@ -23,3 +23,4 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 # media
 MEDIA_URL = '/media/'
 
+
