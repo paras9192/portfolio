@@ -1,22 +1,28 @@
 from .base import *
 
 DEBUG = False
-ALLOWED_HOSTS = ["*"]  # Allows access from any host
+ALLOWED_HOSTS = ["portfolio.yucampus.com", "localhost"]
 
 # 3rd party apps
 THIRD_PARTY_APPS = ["corsheaders"]
 INSTALLED_APPS += THIRD_PARTY_APPS
 
-# added middlewares
-MIDDLEWARE = ["corsheaders.middleware.CorsMiddleware", *MIDDLEWARE]
-
-
-CORS_ALLOW_ALL_ORIGINS = False
-ACCESS_CONTROL_ALLOW_HEADERS=True
-CORS_ALLOW_HEADERS=['*']
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r'.*'
+# Ensure middleware order is correct
+MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    *MIDDLEWARE
 ]
+
+# CORS Configuration
+CORS_ALLOW_ALL_ORIGINS = False  # Set False to define specific origins
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "https://portfolio.yucampus.com",
+]
+
+CORS_ALLOW_CREDENTIALS = True  # If authentication (cookies/tokens) is needed
+CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+CORS_ALLOW_HEADERS = ["*"]
 
 # media
 MEDIA_URL = "/media/"
