@@ -9,7 +9,6 @@ INSTALLED_APPS += THIRD_PARTY_APPS
 
 # Ensure middleware order is correct
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
     *MIDDLEWARE
 ]
 
@@ -21,7 +20,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True  # If authentication (cookies/tokens) is needed
-CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 CORS_ALLOW_HEADERS = ["*"]
 
 # media
