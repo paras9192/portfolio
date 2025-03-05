@@ -106,7 +106,8 @@ def create_final_json_yucampus(user_data,theme_data):
         "client_count": client_count,
         "resume": resume,
         "skills": skills,
-        "description":user_data.get("about","")
+        "description":user_data.get("about",""),
+        "designation":user_data.get("designation","")
         }
     }
     about_section = {
@@ -132,6 +133,10 @@ def create_final_json_yucampus(user_data,theme_data):
             for exp in user_data.get("experience", {})  
         ]
     }
+    }
+    sevices_offered_section = {
+        "sevices_offered":[]
+        
     }
     
     education_section = {
@@ -198,6 +203,7 @@ def create_final_json_yucampus(user_data,theme_data):
         **landing_data,
         **about_section,
         **experience_section,
+        **sevices_offered_section,
         **education_section,
         **skills_section,
         **license_section,
