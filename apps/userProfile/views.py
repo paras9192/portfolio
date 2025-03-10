@@ -28,13 +28,12 @@ class UserDataViewSet(ModelViewSet):
             if not profile_id:
                 raise ValidationError({'message': ['No profile_id provided']})
             user_data = get_yucampus_profile(profile_id)
-            print(user_data)
             if not user_data:
                 raise ValidationError({'message': ['Failed to fetch YUCAMPUS profile data']})
             json_data = {
                 'type': data_type,
                 'profile_id': profile_id,
-                'user_data': user_data,
+                'user_data': user_data['data'],
                 'job_id': request.data.get('job_id'),
             }
 
