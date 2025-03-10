@@ -33,7 +33,7 @@ class UserDataViewSet(ModelViewSet):
             json_data = {
                 'type': data_type,
                 'profile_id': profile_id,
-                'user_data': user_data['data'],
+                'user_data': user_data,
                 'job_id': request.data.get('job_id'),
             }
 
