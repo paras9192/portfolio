@@ -155,7 +155,8 @@ def transform_pdf_text_to_json(pdf_text):
         "description": ["About", "Description", "Summary"],
         "internship": ["Internship"],
         "projects": ["Portfolio", "Projects", "Work Samples"],
-        "education":["education"]
+        "education":["education"],
+        'sevices_offered':['sevices_offered']
     }
 
 
@@ -169,7 +170,8 @@ def transform_pdf_text_to_json(pdf_text):
                 "client_count": 0,
                 "resume": "",
                 "skills": [],
-                "description": ""
+                "description": "",
+                "designation":""
             },
             "about": {
                 "id": "about_me_1",
@@ -185,6 +187,7 @@ def transform_pdf_text_to_json(pdf_text):
                 "description": "",
                 "data": []
             },
+            "sevices_offered":[],
             "skills": [],
             "license": [],
             "portfolio": [],
@@ -273,8 +276,13 @@ def transform_pdf_text_to_json(pdf_text):
                         
                     data["user_data"]["experience"]["data"].extend(internship_entries)
                 
+                if matched_heading == "services_offered":
+                    services_text = lines[i + 1] if i + 1 < len(lines) else ""
+                    raw_services = re.split(r"[,\n]+", services_text)
+                    filtered_services = [service.strip() for service in raw_services if service.strip()]
+                    data["user_data"]["services_offered"] = list(set(filtered_services))
+                
                 if matched_heading == "education":
-                    # print("hi i am education")
                     internship_entries = []
                     for j in range(i + 1, len(lines)):
                         current_line = lines[j].strip()
