@@ -161,7 +161,6 @@ def transform_pdf_text_to_json(pdf_text):
 
 
     data = {
-        "user_data": {
             "landing": {
                 "user_name": "",
                 "contact_me": "",
@@ -205,7 +204,7 @@ def transform_pdf_text_to_json(pdf_text):
                 "x": ""
             }
         }
-    }
+    
     
     
     def match_heading(text, heading_dict):
@@ -244,14 +243,14 @@ def transform_pdf_text_to_json(pdf_text):
                     {"skill_name": skill, "skill_percentage": random.randint(1, 100)}
                     for skill in set(filtered_skills)
                      ]
-                    data["user_data"]["landing"]["skills"] =filtered_skills
-                    data["user_data"]["skills"] = skill_objects
+                    data["landing"]["skills"] =filtered_skills
+                    data["skills"] = skill_objects
 
                 elif matched_heading == "languages":
                     languages_text = lines[i + 1] if i + 1 < len(lines) else ""
                     raw_languages = re.split(r"[,.\s]+", languages_text)
                     filtered_languages = [lang for lang in raw_languages if len(lang) > 1]
-                    data["user_data"]["about"]["languages_known"] = list(set(filtered_languages))
+                    data["about"]["languages_known"] = list(set(filtered_languages))
         
                 if matched_heading == "internship":
                     internship_entries = []
@@ -269,18 +268,18 @@ def transform_pdf_text_to_json(pdf_text):
                             "job_title": role,
                             "description": ""
                             })
-                        if "experience" not in data["user_data"]:
-                            data["user_data"]["experience"] = {"description": "", "data": []}
-                        if "data" not in data["user_data"]["experience"]:
-                            data["user_data"]["experience"]["data"] = []
+                        if "experience" not in data:
+                            data["experience"] = {"description": "", "data": []}
+                        if "data" not in data["experience"]:
+                            data["experience"]["data"] = []
                         
-                    data["user_data"]["experience"]["data"].extend(internship_entries)
+                    data["experience"]["data"].extend(internship_entries)
                 
                 if matched_heading == "services_offered":
                     services_text = lines[i + 1] if i + 1 < len(lines) else ""
                     raw_services = re.split(r"[,\n]+", services_text)
                     filtered_services = [service.strip() for service in raw_services if service.strip()]
-                    data["user_data"]["services_offered"] = list(set(filtered_services))
+                    data["services_offered"] = list(set(filtered_services))
                 
                 if matched_heading == "education":
                     internship_entries = []
@@ -298,12 +297,12 @@ def transform_pdf_text_to_json(pdf_text):
                             "field": degree,
                             "description": ""
                             })
-                        if "education" not in data["user_data"]:
-                            data["user_data"]["education"] = {"description": "", "data": []}
-                        if "data" not in data["user_data"]["education"]:
-                            data["user_data"]["education"]["data"] = []
+                        if "education" not in data:
+                            data["education"] = {"description": "", "data": []}
+                        if "data" not in data["education"]:
+                            data["education"]["data"] = []
                         
-                    data["user_data"]["education"]["data"].extend(internship_entries)
+                    data["education"]["data"].extend(internship_entries)
 
                 elif matched_heading == "description":
                     description_lines = []
@@ -311,7 +310,7 @@ def transform_pdf_text_to_json(pdf_text):
                         if match_heading(lines[j].strip(), headings):
                             break
                         description_lines.append(lines[j].strip())
-                    data["user_data"]["landing"]["description"] = " ".join(description_lines).strip()
+                    data["landing"]["description"] = " ".join(description_lines).strip()
 
                 elif matched_heading == "projects":
                     project_pattern = re.compile(r"(.*?)\|(.*?)MM YYYY")
@@ -329,19 +328,19 @@ def transform_pdf_text_to_json(pdf_text):
                             "date": "MM YYYY", 
                             "description": " ".join([desc.strip() for desc in descriptions])
                                                 })         
-                    data["user_data"]["portfolio"] = projects
+                    data["portfolio"] = projects
 
 
         phone_match = re.search(r"\+?\d{1,4}[\s.-]?\(?\d{1,4}\)?[\s.-]?\d{1,4}[\s.-]?\d{1,9}", pdf_text)
         email_match = re.search(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}", pdf_text)
         linkedin_match = re.search(r"https?://(www\.)?linkedin\.com/[^\s]+", pdf_text)
         name_match=re.search(r"\b[A-Z][a-z]+(?:\s[A-Z][a-z]+)+\b", pdf_text)
-        data["user_data"]["contact_me"]["phone"] = phone_match.group(0) if phone_match else ""
-        data["user_data"]["contact_me"]["email"] = email_match.group(0) if email_match else ""
-        data["user_data"]["contact_me"]["linkedin"] = linkedin_match.group(0) if linkedin_match else ""
-        data["user_data"]["contact_me"]["name"] =name_match.group(0) if name_match else ""
-        data["user_data"]["landing"]["user_name"]=name_match.group(0) if name_match else ""
-        data["user_data"]["landing"]["contact_me"]=phone_match.group(0) if phone_match else ""
+        data["contact_me"]["phone"] = phone_match.group(0) if phone_match else ""
+        data["contact_me"]["email"] = email_match.group(0) if email_match else ""
+        data["contact_me"]["linkedin"] = linkedin_match.group(0) if linkedin_match else ""
+        data["contact_me"]["name"] =name_match.group(0) if name_match else ""
+        data["landing"]["user_name"]=name_match.group(0) if name_match else ""
+        data["landing"]["contact_me"]=phone_match.group(0) if phone_match else ""
 
     
 
