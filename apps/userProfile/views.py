@@ -67,7 +67,7 @@ class UserDataViewSet(ModelViewSet):
                 data = transform_pdf_text_to_json(pdf_text)
                 json_data = {
                 'type': data_type,
-                'user_data': data,
+                'user_data':  data ,
                 'job_id': request.data.get('job_id'),
             }
                 serializer = self.get_serializer(data=json_data)
@@ -104,6 +104,7 @@ class UserDataViewSet(ModelViewSet):
             user_data = request.data['user_data']
             user_data = json.loads(user_data)
             instance.user_data = user_data  
+            instance.type = data_type
             instance.save()
 
             serializer = self.get_serializer(instance)

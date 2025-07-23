@@ -46,10 +46,15 @@ class PortFolioViewSet(ModelViewSet):
         if not user_data_obj:
             return Response({"error": "No User Data found for the given job_id"}, status=status.HTTP_404_NOT_FOUND)
         user_data = user_data_obj.user_data
+       
         if(user_data_obj.type=="YUCAMPUS"):
+
             final_json = create_final_json_yucampus(user_data,theme_meta_data)
         if(user_data_obj.type =="DIRECT"):
             final_json = create_final_json_direct(user_data, theme_meta_data)
+        if(user_data_obj.type =="RESUME"):
+            final_json = create_final_json_resume(user_data, theme_meta_data)
+            
         portfolio = PortFolio.objects.create(job_id=job_data, final_json=final_json)
         serializer = PortfolioSerializer(portfolio)
         return custom_success_response(serializer.data, status=status.HTTP_201_CREATED)
@@ -79,6 +84,8 @@ class PortFolioViewSet(ModelViewSet):
             final_json = create_final_json_yucampus(user_data, theme_meta_data)
         if user_data_obj.type =="DIRECT":
             final_json = create_final_json_direct(user_data, theme_meta_data)
+        if user_data_obj.type =="RESUME":
+            final_json = create_final_json_resume(user_data, theme_meta_data)
         
         instance.job_id = job_data
         instance.final_json = final_json
@@ -231,9 +238,34 @@ def create_final_json_direct(user_data,theme_data):
             **theme_data
         }
     }
+    final_user_Data={
+        "data":{
+            **user_data
+        
+        }
+    }
     final_json_data = {
         **theme_data,
+        **final_user_Data
+        
+    }
+    return final_json_data
+
+
+def create_final_json_resume(user_data,theme_data):
+    theme_data = {
+        "theme":{
+            **theme_data
+        }
+    }
+    final_user_data = {
+        "data":{
         **user_data
+        }
+    }
+    final_json_data = {
+        **theme_data,
+        **final_user_data
         
     }
     return final_json_data
