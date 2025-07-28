@@ -13,7 +13,7 @@ MIDDLEWARE = [
 ]
 
 # CORS Configuration
-CORS_ALLOW_ALL_ORIGINS = False  # Set False to define specific origins
+CORS_ALLOW_ALL_ORIGINS = True  # Set False to define specific origins
 CORS_ALLOWED_ORIGINS = [
     "*"
 ]
