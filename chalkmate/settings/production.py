@@ -15,9 +15,7 @@ MIDDLEWARE = [
 # CORS Configuration
 CORS_ALLOW_ALL_ORIGINS = False  # Set False to define specific origins
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "https://portfolio.yucampus.com",
-    "https://portfolio-builder.yucampus.com",
+    "*"
 ]
 
 CORS_ALLOW_CREDENTIALS = True  # If authentication (cookies/tokens) is needed
