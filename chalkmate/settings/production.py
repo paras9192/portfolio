@@ -1,7 +1,7 @@
 from .base import *
 
 DEBUG = False
-ALLOWED_HOSTS = ["portfolio.yucampus.com", "localhost","127.0.0.1"]
+ALLOWED_HOSTS = ["portfolio.yucampus.com", "localhost","127.0.0.1","portfolio-builder.yucampus.com"]
 
 # 3rd party apps
 THIRD_PARTY_APPS = ["corsheaders"]
@@ -17,6 +17,7 @@ CORS_ALLOW_ALL_ORIGINS = False  # Set False to define specific origins
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://portfolio.yucampus.com",
+    "https://portfolio-builder.yucampus.com"
 ]
 
 CORS_ALLOW_CREDENTIALS = True  # If authentication (cookies/tokens) is needed
